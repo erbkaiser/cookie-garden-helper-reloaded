@@ -1,3 +1,9 @@
+## Changes in this fork
+
+* Includes features that may not be as well thought out or are still in testing. Use Chakaa's instead, any functional patches will be submitted upstream.
+
+----------
+
 # cookie-garden-helper-reloaded
 
 Automate your garden in Cookie Clicker
