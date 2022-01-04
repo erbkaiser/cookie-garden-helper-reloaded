@@ -1,12 +1,12 @@
 {
-	"Name": "Cookie Garden Helper - Reloaded",
-	"ID": "cookiegardenhelperreloaded",
-	"Author": "chakaa",
-	"Description": "Automate your garden in Cookie Clicker - reloaded",
-	"ModVersion": 1,
-	"GameVersion": 2.042,
-	"Date": "01/09/2021",
-	"Dependencies": [],
-	"Disabled": 0,
-	"AllowSteamAchievs": 1
+ "Name": "Cookie Garden Helper - Reloaded - Edit",
+ "ID": "cookiegardenhelperreloadededit",
+ "Author": "chakaa",
+ "Description": "Automate your garden in Cookie Clicker - reloaded",
+ "ModVersion": 4.11,
+ "GameVersion": 2.043,
+ "Date": "01/09/2021",
+ "Dependencies": [],
+ "Disabled": 0,
+ "AllowSteamAchievs": 1
 }

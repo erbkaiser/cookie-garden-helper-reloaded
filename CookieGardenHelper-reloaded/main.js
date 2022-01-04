@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.10';
+		this.version = '1.4.11-edit';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -59,8 +59,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if (key == 'fillGardenWithSelectedSeed') {
 			this.fillGardenWithSelectedSeed();
 		} else if (key == 'savePlot') {
-			this.config['savedPlot'] = this.clonePlot();
-			this.labelToggleState('plotIsSaved', true);
+			this.config['savedPlot'] = Game.keys[17]?this.emptyPlot():this.clonePlot();
+			this.labelToggleState('plotIsSaved', !Game.keys[17]);
 		}
 		this.save();
 	},
@@ -409,7 +409,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				  </p>
 				  <p>
 					${this.button('savePlot', 'Save plot',
-					  'Save the current plot; these seeds will be replanted later')}
+					  'Save the current plot; these seeds will be replanted later. Hold Ctrl and click to clear.')}
 					${this.labelWithState('plotIsSaved', 'No saved plot', 'Plot saved',
 					  Boolean(this.config.savedPlot.length))}
 				  </p>
@@ -422,6 +422,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					)}
 				  </p>
 				  -->
+				  <p>
+					${this.button(
+					  'autoPlot', 'auto plot',
+					  'Set plot automatically', true,
+					  this.config.autoPlot
+					)}
+				  </p>
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="manualToolsPanel">
 				  <h2>Manual tools</h2>
@@ -479,6 +486,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.doc.elId('cookiegardenhelperreloadedToggleSeedList').onclick = (event) => {
 			this.toggleSeedList(this);
 		}
+		//this.doc.elId('cookiegardenhelperreloadedSavePlot').on('keyup keydown', function(e){shifted = e.shiftKey} );
 	},
 	getUpgradeListDisplay:function() {
 		str = "";
@@ -989,7 +997,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(this.config.savedPlot.length>0){
 			let [seedId, age] = this.config.savedPlot[y][x];
 			seedId--;
-			if ( this.config.autoHarvestCleanGarden && ((plant.unlocked && seedId == -1) || (seedId > -1 && seedId != plant.id)) ) {
+			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) ) {
 				this.harvest(x, y);
 			}
 		}
@@ -1002,13 +1010,24 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
 		}
+		if(this.config.autoPlot && this.config.savedPlot.length>0){
+			let [seedId, age] = this.config.savedPlot[y][x];
+			seedId--;
+			if ( this.config.autoHarvestCleanGarden &&  (seedId != plant.id) ) {
+				this.harvest(x, y);
+			}
+		}
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
 			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
-			this.harvest(x, y);
+				if(this.config.autoPlot) {
+					this.minigame().harvestAll(plant);
+				}else{
+					this.harvest(x, y);
+				}
 			}
 		}
 	},
@@ -1027,12 +1046,40 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		for (var b in Game.buffs){if(Game.buffs[b].hasOwnProperty('multCpS')){mult*=Game.buffs[b].multCpS;}}
 		return mult;
 	},
+	setPlot:function() {
+		var arr = [14, 13, 24, 10, 2, 9, 3, 21, 22, 23, 12, 4, 5, 7, 30, 11, 20, 18, 8, 19, 32, 15, 17, 16, 33, 34, 29, 26, 27, 25, 28, 31, 6];
+		this.config.savedPlot=this.buildMutationPlotData(14);
+		for( var i=0 ; i < arr.length; i++){
+			if(this.getPlant(arr[i]).unlocked) {
+				continue;
+			}
+			var eflag = false;
+			for (let x=0; x<6; x++) {
+				for (let y=0; y<6; y++) {
+					if (this.getTile(x, y).seedId == arr[i]) {
+						eflag = true;
+					}
+				}
+			}
+			if ((arr[i] != 24) && eflag) {
+				continue;
+			}
+			if(this.parentsUnlocked(arr[i])) {
+				this.config.savedPlot=this.buildMutationPlotData(arr[i]);
+			}
+			break;
+		}
+		return;
+	},
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
 			this.doc.elId('cghrSeedListDiv').textContent = '';
 			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
+			if(this.config.autoPlot){
+				this.setPlot();
+			}
 
 			//Display Upgrades
 			this.doc.elId('cghrUpgradeListDiv').textContent = '';
@@ -1126,6 +1173,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			autoForceTicks: false,
+			autoPlot: false,
 			savedPlot: [],
 		}
 		return data;
