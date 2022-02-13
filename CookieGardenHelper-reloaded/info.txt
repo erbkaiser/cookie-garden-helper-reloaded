@@ -1,9 +1,9 @@
 {
  "Name": "Cookie Garden Helper - Reloaded - Edit",
  "ID": "cookiegardenhelperreloadededit",
- "Author": "chakaa",
+ "Author": "chakaa / erbkaiser",
  "Description": "Automate your garden in Cookie Clicker - reloaded",
- "ModVersion": 4.11,
+ "ModVersion": 4.11-edit,
  "GameVersion": 2.043,
  "Date": "01/09/2021",
  "Dependencies": [],
