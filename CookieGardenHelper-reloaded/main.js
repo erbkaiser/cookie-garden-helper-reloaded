@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.10';
+		this.version = '1.4.11';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -588,7 +588,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			//Level 8
 			else if(l==8 && parents==1){
-				if((x==1 || x==4) && (y==1 || y==2 || y==4 || y==5)){ return 0 }
+				if((x==1 || x==4) && (y==0 || y==1 || y==4 || y==5)){ return 0 }
+				else if(x==1 && y==3){ return 0 }
+				else if(x==4 && y==2){ return 0 }
 			}
 			else if(l==8 && parents==2){
 				if((x==1 || x==4) && (y==1 || y==4)){ return 0 }
@@ -596,7 +598,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			//Level 9+
 			else if(l>=9 && parents==1){
-				if((x==1 || x==4) && (y==0 || y==1 || y==2 || y==4 || y==5)){ return 0 }
+				if((x==1 || x==4) && (y==0 || y==1 || y==4 || y==5)){ return 0 }
+				else if(x==1 && y==3){ return 0 }
+				else if(x==4 && y==2){ return 0 }
 			}
 			else if(l>=9 && parents==2){
 				if((x==1 || x==4) && (y==0 || y==5)){ return 0 }
@@ -793,8 +797,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Golden clover - also use for weeds
-		if(seedId==6 || seedId==31 || seedId==13 || seedId==24){
+		//Golden clover - also use for brown mold & crumbspore
+		if(seedId==6 || seedId==13 || seedId==24){
 			var C = [m[0] + 1,0]
 			var X = [0,0]
 			if(l>=9){
@@ -891,55 +895,55 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 		//Shriekbulb from Elderwort
 		if(seedId==31){
-			var E = [8,0]
+			var W = [8,0]
 			var X = [0,0]
 			if(l>=9){
 				return [ 
-					[X,E,E,E,E,X],
-					[E,X,X,X,X,E],
-					[E,X,E,E,X,E],
-					[E,X,E,E,X,E],
-					[E,X,X,X,X,E],
-					[X,E,E,E,E,X]
+					[X,W,W,W,W,X],
+					[W,X,X,X,X,W],
+					[W,X,W,W,X,W],
+					[W,X,W,W,X,W],
+					[W,X,X,X,X,W],
+					[X,W,W,W,W,X]
 				];
 			}
 			else if(l>=8){
 				return [	
 					[X,X,X,X,X,X],
-					[E,E,X,E,X,E],
-					[X,E,X,E,E,E],
-					[E,E,X,X,E,X],
-					[X,E,X,E,E,E],
-					[E,E,X,E,X,E]
+					[W,W,X,W,X,W],
+					[X,W,X,W,W,W],
+					[W,W,X,X,W,X],
+					[X,W,X,W,W,W],
+					[W,W,X,W,X,W]
 				];
 			}
 			else if(l>=7){
 				return [	
 					[X,X,X,X,X,X],
-					[X,E,E,X,E,E],
-					[X,X,E,X,E,X],
-					[X,E,E,X,E,E],
-					[X,X,E,X,E,X],
-					[X,E,E,X,E,E]
+					[X,W,W,X,W,W],
+					[X,X,W,X,W,X],
+					[X,W,W,X,W,W],
+					[X,X,W,X,W,X],
+					[X,W,W,X,W,W]
 				];
 			}
 			else if(l>=6){
 				return [	
 					[X,X,X,X,X,X],
-					[X,X,E,E,E,X],
+					[X,X,W,W,W,X],
 					[X,X,X,X,X,X],
-					[X,E,E,E,E,E],
-					[X,E,X,E,X,E],
+					[X,W,W,W,W,W],
+					[X,W,X,W,X,W],
 					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
-					[X,E,E,X,E,X],
-					[X,X,E,E,E,X],
-					[X,E,E,E,X,X],
-					[X,E,X,E,E,X],
+					[X,W,W,X,W,X],
+					[X,X,W,W,W,X],
+					[X,W,W,W,X,X],
+					[X,W,X,W,W,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -947,9 +951,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,E,X,E,E,X],
-					[X,E,E,E,X,X],
-					[X,E,X,E,E,X],
+					[X,W,X,W,W,X],
+					[X,W,W,W,X,X],
+					[X,W,X,W,W,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -957,9 +961,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,E,X,E,X],
-					[X,X,E,E,E,X],
-					[X,X,E,X,E,X],
+					[X,X,W,X,W,X],
+					[X,X,W,W,W,X],
+					[X,X,W,X,W,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -967,8 +971,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,E,X,E,X],
-					[X,X,E,E,E,X],
+					[X,X,W,X,W,X],
+					[X,X,W,W,W,X],
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X]
 				];
@@ -981,16 +985,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		//Everdaisy
 		if(seedId==33){
 			var T = [32,0]
-			var E = [8,0]
+			var W = [8,0]
 			var X = [0,0]
 			if(l>=9){
 				return [	
-					[X,T,E,E,X,T],
+					[X,T,W,W,X,T],
 					[T,T,X,T,X,T],
-					[E,X,X,E,X,E],
-					[E,T,E,E,X,T],
+					[W,X,X,W,X,W],
+					[W,T,W,W,X,T],
 					[X,X,X,X,T,T],
-					[T,T,E,T,T,X]
+					[T,T,W,T,T,X]
 				];
 			}
 			else if(l>=8){
@@ -998,7 +1002,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,X,X,X,X,X],
 					[T,T,T,T,T,T],
 					[X,X,X,X,X,X],
-					[E,E,E,E,E,E],
+					[W,W,W,W,W,W],
 					[X,X,X,X,X,X],
 					[T,T,T,T,T,T]
 				];
@@ -1008,7 +1012,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,X,X,X,X,X],
 					[X,T,T,T,T,T],
 					[X,X,X,X,X,X],
-					[X,E,E,E,E,E],
+					[X,W,W,W,W,W],
 					[X,X,X,X,X,X],
 					[X,T,T,T,T,T]
 				];
@@ -1016,20 +1020,20 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			else if(l>=6){
 				return [	
 					[X,X,X,X,X,X],
-					[X,T,X,E,X,T],
-					[X,T,X,E,X,T],
-					[X,T,X,E,X,T],
-					[X,T,X,E,X,T],
+					[X,T,X,W,X,T],
+					[X,T,X,W,X,T],
+					[X,T,X,W,X,T],
+					[X,T,X,W,X,T],
 					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
-					[X,X,T,E,E,X],
+					[X,X,T,W,W,X],
 					[X,T,T,X,T,X],
-					[X,E,X,X,E,X],
-					[X,E,T,E,E,X],
+					[X,W,X,X,W,X],
+					[X,W,T,W,W,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -1037,7 +1041,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,E,E,E,E,X],
+					[X,W,W,W,W,X],
 					[X,X,X,X,X,X],
 					[X,T,T,T,T,X],
 					[X,X,X,X,X,X]
@@ -1047,9 +1051,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,E,X,T,X],
-					[X,X,E,X,T,X],
-					[X,X,E,X,T,X],
+					[X,X,W,X,T,X],
+					[X,X,W,X,T,X],
+					[X,X,W,X,T,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -1067,7 +1071,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
 	getPlantParents:function(seedId) {
-		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,19],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[4,11],[22],[0,10],[31,7],[23,7]];
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[7],[0,10],[31,7],[7,23]];
 		return mutations[seedId-1];
 	},
 	
@@ -1202,7 +1206,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(this.config.savedPlot.length>0){
 			let [seedId, age] = this.config.savedPlot[y][x];
 			seedId--;
-			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) ) {
+			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) && ( seedId != 22 ) ) {
 				this.harvest(x, y);
 			}
 		}
