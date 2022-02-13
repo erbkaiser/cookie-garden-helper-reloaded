@@ -486,7 +486,6 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.doc.elId('cookiegardenhelperreloadedToggleSeedList').onclick = (event) => {
 			this.toggleSeedList(this);
 		}
-		//this.doc.elId('cookiegardenhelperreloadedSavePlot').on('keyup keydown', function(e){shifted = e.shiftKey} );
 	},
 	getUpgradeListDisplay:function() {
 		str = "";
@@ -649,7 +648,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		var X = [0,0]
 		var Y = [p1,0]
 		var Z = [p2,0]
-		if(l>=8){
+		if(this.config.autoPlot && (l>=9)){
+			return [
+				[Y,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
+				[Z,Z,Z,Z,Z,Z],
+				[Z,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[Y,Y,Y,Y,Y,Y]
+			];
+		}else if(l>=8){
 			return [
 				[X,X,X,X,X,X],
 				[Y,Y,Y,Y,Y,Y],
@@ -785,9 +793,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Golden clover
-		if(seedId==6){
-			var C = [5,0]
+		//Golden clover - also use for weeds
+		if(seedId==6 || seedId==31 || seedId==13 || seedId==24){
+			var C = [m[0] + 1,0]
 			var X = [0,0]
 			if(l>=9){
 				return [	
@@ -1059,7 +1067,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
 	getPlantParents:function(seedId) {
-		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[7],[0,10],[31,7],[7,23]];
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,19],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[4,11],[22],[0,10],[31,7],[23,7]];
 		return mutations[seedId-1];
 	},
 	
@@ -1244,25 +1252,56 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		return mult;
 	},
 	setPlot:function() {
-		var arr = [14, 13, 24, 10, 2, 9, 3, 21, 22, 23, 12, 4, 5, 7, 30, 11, 20, 18, 8, 19, 32, 15, 17, 16, 33, 34, 29, 26, 27, 25, 28, 31, 6];
+		var stage1 = [14, 13, 24];
+		var sflag = false;
+		for( var i=0 ; i < stage1.length; i++){
+			if(!this.getPlant(stage1[i]).unlocked) {
+				sflag = true;
+				break;
+			}
+		}
+		this.config.autoHarvestAvoidImmortals = false;
+		this.config.autoHarvestNewSeeds = true;
+		this.config.autoHarvestCheckCpSMult = false;
+		this.config.autoHarvestDying = false;
+		this.config.autoHarvestCheckCpSMultDying = false;
+		this.config.autoPlantAvoidBuffs = true;
+		this.config.autoPlantCheckCpSMult = false;
+		if(sflag) {
+			this.config.autoHarvestMatured = true;
+			this.config.autoHarvestWeeds = false;
+			this.config.autoHarvestCleanGarden = false;
+			this.config.autoPlantRotateSoil = false;
+			//autoPlantRotateSoilCombo: 0,
+		}else{
+			this.config.autoHarvestMatured = false;
+			this.config.autoHarvestWeeds = true;
+			this.config.autoHarvestCleanGarden = true;
+			this.config.autoPlantRotateSoil = true;
+			this.config.autoPlantRotateSoilCombo = 1;
+		}
+		var seeds = [14, 13, 24, 10, 2, 9, 3, 21, 22, 23, 12, 4, 5, 7, 30, 11, 20, 18, 8, 19, 32, 15, 17, 16, 33, 34, 29, 26, 27, 25, 28, 31, 6];
 		this.config.savedPlot=this.buildMutationPlotData(14);
-		for( var i=0 ; i < arr.length; i++){
-			if(this.getPlant(arr[i]).unlocked) {
+		for( var i=0 ; i < seeds.length; i++){
+			if(this.getPlant(seeds[i]).unlocked) {
 				continue;
 			}
 			var eflag = false;
 			for (let x=0; x<6; x++) {
 				for (let y=0; y<6; y++) {
-					if (this.getTile(x, y).seedId == arr[i]) {
+					if (this.getTile(x, y).seedId == seeds[i]) {
 						eflag = true;
 					}
 				}
 			}
-			if ((arr[i] != 24) && eflag) {
+			if ((seeds[i] != 24) && (seeds[i] != 34) && eflag) {
 				continue;
 			}
-			if(this.parentsUnlocked(arr[i])) {
-				this.config.savedPlot=this.buildMutationPlotData(arr[i]);
+			if(seeds[i] == 22) {
+				this.config.autoHarvestDying = true;
+			}
+			if(this.parentsUnlocked(seeds[i])) {
+				this.config.savedPlot=this.buildMutationPlotData(seeds[i]);
 			}
 			break;
 		}
