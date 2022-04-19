@@ -1102,7 +1102,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	setCorrectSoil:function(){
 		var M = this.minigame();
 		if(!M.freeze){
-			var young = 0;
+			var young = 1; //Favour young over mature if tie or empty
 			var matur = 0;
 			for (let x=0; x<6; x++) {
 				for (let y=0; y<6; y++) {
