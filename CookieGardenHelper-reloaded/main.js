@@ -1365,7 +1365,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 
 			  if (this.config.autoPlant &&
 					(!this.config.autoPlantCheckCpSMult || this.CpSMult() <= this.config.autoPlantMaxiCpSMult.value) &&
-					(!this.config.autoPlantAvoidBuffs || this.getBuffMultCps()<=1) &&
+					(!this.config.autoPlantAvoidBuffs || this.getBuffMultCps()<=1.2) &&
 				  	this.tileIsEmpty(x, y) &&
 				  	this.config.savedPlot.length > 0
 				) {
