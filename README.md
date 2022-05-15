@@ -40,6 +40,8 @@ First, it will check if the tile is empty.
 If not, it will check if the plant is immortal. If it is, and the **Avoid immortals** option 
 is **ON**, it will ignore this tile.
 
+If not, it will check if the plant is under Divine Protection. If it is, it will ignore this tile.
+
 If not, it will compute the plant stage. Below is a list of these stages 
 and the conditions when the plant will be harvested:
 
@@ -106,6 +108,8 @@ Red if you cannot unlock it yet (one or both parents are not unlocked).
 **Hovering** on a seed's name will display a suggested seed mutation layout.
 
 **Clicking** on its name will overwrite the saved plot by the suggested layout, for use with **Auto-plant**.
+
+**Ctrl+Clicking** on its name will apply, or remove, the Divine Protection, making the Auto-Harvest ignore it.
 
 ## Sacrifice garden
 
@@ -181,6 +185,10 @@ The rest of your configuration will remain.
 >1.4.11: `New option to clear the saved plot (ctrl+click the button)`
 >
 >1.4.12: `More optimal seed layouts for Shriekbulb, Elderdaisy, JQB, GC`
+
+### 1.5
+
+>`New "Divine Protection" feature`
 
 ## Issues
 
