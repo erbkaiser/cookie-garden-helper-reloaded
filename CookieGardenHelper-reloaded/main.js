@@ -3,8 +3,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.5';
-		this.GameVersion = '2.042';
+		this.version = '1.5-edit';
+		this.GameVersion = '2.046';
 		
 		this.config = this.defaultConfig();
 		this.doc = {

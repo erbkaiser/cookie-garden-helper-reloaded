@@ -3,9 +3,9 @@
 	"ID": "cookiegardenhelpereddit",
 	"Author": "chakaa / erbkaiser",
 	"Description": "Automate your garden in Cookie Clicker - reloaded",
-	"ModVersion": "1.4.12-edit",
-	"GameVersion": 2.042,
-	"Date": "13/02/2022",
+	"ModVersion": "1.5-edit",
+	"GameVersion": 2.046,
+	"Date": "15/05/2022",
 	"Dependencies": [],
 	"Disabled": 0,
 	"AllowSteamAchievs": 1
