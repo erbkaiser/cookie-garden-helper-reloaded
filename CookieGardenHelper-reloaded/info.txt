@@ -4,8 +4,8 @@
 	"Author": "chakaa / erbkaiser",
 	"Description": "Automate your garden in Cookie Clicker - reloaded",
 	"ModVersion": "1.5-edit",
-	"GameVersion": 2.046,
-	"Date": "15/05/2022",
+	"GameVersion": 2.047,
+	"Date": "2022/05/29",
 	"Dependencies": [],
 	"Disabled": 0,
 	"AllowSteamAchievs": 1
