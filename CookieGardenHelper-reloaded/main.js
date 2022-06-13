@@ -38,8 +38,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			
 			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 		}else{
-			if(!this.parentsUnlocked(seedId))return;
-			this.config.savedPlot=this.buildMutationPlotData(seedId);
+		if(!this.parentsUnlocked(seedId))return;
+		this.config.savedPlot=this.buildMutationPlotData(seedId);
 			this.labelToggleState('plotIsSaved', true);
 		}
 	},
@@ -1287,7 +1287,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.config.autoHarvestAvoidImmortals = false;
 		this.config.autoHarvestNewSeeds = true;
 		this.config.autoHarvestCheckCpSMult = false;
-		this.config.autoHarvestDying = false;
+		this.config.autoHarvestDying = true;
 		this.config.autoHarvestCheckCpSMultDying = false;
 		this.config.autoPlantAvoidBuffs = true;
 		this.config.autoPlantCheckCpSMult = false;
@@ -1337,7 +1337,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.doc.elId('cghrSeedListDiv').textContent = '';
 			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
-			if(this.config.autoPlot){
+			if (this.config.autoPlant && this.config.autoPlot){
 				this.setPlot();
 			}
 
