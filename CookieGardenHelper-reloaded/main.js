@@ -665,6 +665,49 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			[X,X,X,X,X,X],
 		];
 	},
+	availablePlots:function() {
+		var l = Game.Objects['Farm'].level
+		if(l==1){
+			return [2,2,3,3];
+		}else if(l==2){
+			return [2,2,4,3];
+		}else if(l==3){
+			return [2,2,4,4];
+		}else if(l==4){
+			return [1,2,4,4];
+		}else if(l==5){
+			return [1,1,4,4];
+		}else if(l==6){
+			return [1,1,5,4];
+		}else if(l==7){
+			return [2,2,5,5];
+		}else if(l==8){
+			return [0,1,5,5];
+		}
+		return [0,0,5,5];
+	},
+	allPlots:function(parents) {
+		var plots = this.availablePlots();
+		var p1 = parents[0]+1;
+		var X = [0,0];
+		var Y = [p1,0];
+
+		var outPlot= [
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X]
+		];
+		for(var y=plots[1];y<=plots[3];y++){
+			for(var x=plots[0];x<=plots[2];x++){
+				outPlot[y][x]=Y;
+			}
+		}
+		return outPlot;
+
+	},
 	horizontalPlots:function(parents) {
 		var l = Game.Objects['Farm'].level
 		var p1 = parents[0]+1
@@ -822,7 +865,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			var C = [m[0] + 1,0]
 			var X = [0,0]
 			if(l>=9){
-				return [	
+				return [
 					[C,X,X,C,X,C],
 					[C,C,C,C,C,X],
 					[X,X,X,X,C,C],
@@ -830,8 +873,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,C,C,C,C,C],
 					[C,X,C,X,X,C]
 				];
-			}
-			else if(l>=8){
+			}else if(l>=8){
 				return [	
 					[X,X,X,X,X,X],
 					[C,X,C,X,X,C],
@@ -840,8 +882,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[C,C,C,X,X,C],
 					[C,X,C,X,X,C]
 				];
-			}
-			else if(l>=7){
+			}else if(l>=7){
 				return [	
 					[X,X,X,X,X,X],
 					[X,C,X,C,X,C],
@@ -850,8 +891,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,C,X,C,X,C],
 					[X,C,X,C,X,C]
 				];
-			}
-			else if(l>=6){
+			}else if(l>=6){
 				return [	
 					[X,X,X,X,X,X],
 					[X,C,C,X,C,C],
@@ -860,8 +900,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,C,C,X,C,C],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=5){
+			}else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
 					[X,C,X,X,C,X],
@@ -870,8 +909,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,C,C,C,C,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=4){
+			}else if(l>=4){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
@@ -880,8 +918,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,C,C,X,C,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=3){
+			}else if(l>=3){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
@@ -890,8 +927,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,X,C,X,C,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=2){
+			}else if(l>=2){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
@@ -900,8 +936,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=1){
+			}else if(l>=1){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
@@ -915,92 +950,158 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 		//Shriekbulb from Elderwort
 		if(seedId==31){
-			var W = [8,0]
+			var E = [8,0]
 			var X = [0,0]
 			if(l>=9){
 				return [ 
-					[X,W,W,W,W,X],
-					[W,X,X,X,X,W],
-					[W,X,W,W,X,W],
-					[W,X,W,W,X,W],
-					[W,X,X,X,X,W],
-					[X,W,W,W,W,X]
+					[X,E,E,E,E,X],
+					[E,X,X,X,X,E],
+					[E,X,E,E,X,E],
+					[E,X,E,E,X,E],
+					[E,X,X,X,X,E],
+					[X,E,E,E,E,X]
 				];
-			}
-			else if(l>=8){
+			}else if(l>=8){
 				return [	
 					[X,X,X,X,X,X],
-					[W,W,X,W,X,W],
-					[X,W,X,W,W,W],
-					[W,W,X,X,W,X],
-					[X,W,X,W,W,W],
-					[W,W,X,W,X,W]
+					[E,E,X,E,X,E],
+					[X,E,X,E,E,E],
+					[E,E,X,X,E,X],
+					[X,E,X,E,E,E],
+					[E,E,X,E,X,E]
 				];
-			}
-			else if(l>=7){
+			}else if(l>=7){
 				return [	
 					[X,X,X,X,X,X],
-					[X,W,W,X,W,W],
-					[X,X,W,X,W,X],
-					[X,W,W,X,W,W],
-					[X,X,W,X,W,X],
-					[X,W,W,X,W,W]
+					[X,E,E,X,E,E],
+					[X,X,E,X,E,X],
+					[X,E,E,X,E,E],
+					[X,X,E,X,E,X],
+					[X,E,E,X,E,E]
 				];
-			}
-			else if(l>=6){
+			}else if(l>=6){
 				return [	
 					[X,X,X,X,X,X],
-					[X,X,W,W,W,X],
+					[X,X,E,E,E,X],
 					[X,X,X,X,X,X],
-					[X,W,W,W,W,W],
-					[X,W,X,W,X,W],
+					[X,E,E,E,E,E],
+					[X,E,X,E,X,E],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=5){
+			}else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
-					[X,W,W,X,W,X],
-					[X,X,W,W,W,X],
-					[X,W,W,W,X,X],
-					[X,W,X,W,W,X],
+					[X,E,E,X,E,X],
+					[X,X,E,E,E,X],
+					[X,E,E,E,X,X],
+					[X,E,X,E,E,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=4){
+			}else if(l>=4){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,W,X,W,W,X],
-					[X,W,W,W,X,X],
-					[X,W,X,W,W,X],
+					[X,E,X,E,E,X],
+					[X,E,E,E,X,X],
+					[X,E,X,E,E,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=3){
+			}else if(l>=3){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,W,X,W,X],
-					[X,X,W,W,W,X],
-					[X,X,W,X,W,X],
+					[X,X,E,X,E,X],
+					[X,X,E,E,E,X],
+					[X,X,E,X,E,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l>=2){
+			}else if(l>=2){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,W,X,W,X],
-					[X,X,W,W,W,X],
+					[X,X,E,X,E,X],
+					[X,X,E,E,E,X],
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X]
 				];
-			}
-			else if(l<2){ //Alternative parents
+			}else if(l<2){ //Alternative parents
 				m=[29,8];
 			}
+		}
+		//Everdaisy
+		if(seedId==33){
+			var T = [32,0]
+			var E = [8,0]
+			var X = [0,0]
+			if(l>=9){
+				return [	
+					[X,T,E,E,X,T],
+					[T,T,X,T,X,T],
+					[E,X,X,E,X,E],
+					[E,T,E,E,X,T],
+					[X,X,X,X,T,T],
+					[T,T,E,T,T,X]
+				];
+			}else if(l>=8){
+				return [	
+					[X,X,X,X,X,X],
+					[T,T,T,T,T,T],
+					[X,X,X,X,X,X],
+					[E,E,E,E,E,E],
+					[X,X,X,X,X,X],
+					[T,T,T,T,T,T]
+				];
+			}else if(l>=7){
+				return [	
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,T],
+					[X,X,X,X,X,X],
+					[X,E,E,E,E,E],
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,T]
+				];
+			}else if(l>=6){
+				return [	
+					[X,X,X,X,X,X],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,X,X,X,X,X]
+				];
+			}else if(l>=5){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,T,E,E,X],
+					[X,T,T,X,T,X],
+					[X,E,X,X,E,X],
+					[X,E,T,E,E,X],
+					[X,X,X,X,X,X]
+				];
+			}else if(l>=4){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,E,E,E,E,X],
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,X],
+					[X,X,X,X,X,X]
+				];
+			}else if(l>=3){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,E,X,T,X],
+					[X,X,E,X,T,X],
+					[X,X,E,X,T,X],
+					[X,X,X,X,X,X]
+				];
+			}
 			return this.emptyPlot();
+		}
+		//BrownMold && Crumbspore : Filled plots
+		if(seedId==13 || seedId==24){
+			return this.allPlots(m);
 		}
 		//Everdaisy
 		if(seedId==33){
@@ -1128,6 +1229,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				for (let y=0; y<6; y++) {
 					if(!this.tileIsEmpty(x, y)){
 						let tile = this.getTile(x, y);
+						if(this.getPlant(tile.seedId).immortal)
+							continue;
 						let stage = this.getPlantStage(tile);
 						if(stage=='young'){
 							young++;
@@ -1226,7 +1329,6 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(this.config.savedPlot.length>0){
 			let [seedId, age] = this.config.savedPlot[y][x];
 			seedId--;
-			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) && ( seedId != 22 ) ) {
 				this.harvest(x, y);
 			}
 		}
